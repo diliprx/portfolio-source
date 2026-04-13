@@ -197,9 +197,10 @@ nav {
 .form-row select option { background: var(--dark) !important; }
 .form-row select option:hover,
 .form-row select option:-moz-focus-inner:hover,
-.form-row select option[role] { 
+.form-row select option[role],
+option:hover { 
   background: #666 !important; 
-  color: #f0f0f0 !important; /* Dark grey bg/light text - forced for Netlify/prod */
+  color: #f0f0f0 !important; /* Dark grey bg/light text - Chrome/Edge fix */
 }
 .form-submit { width: 100%; padding: 1rem; background: var(--accent); color: var(--dark); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; border: none; cursor: pointer; margin-top: 1rem; transition: all 0.2s; }
 .form-submit:hover { background: #d4ff4a; transform: translateY(-1px); }
