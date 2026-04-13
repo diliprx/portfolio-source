@@ -191,7 +191,9 @@ nav {
 .form-row input:focus, .form-row textarea:focus { border-color: var(--accent); }
 .form-row textarea { resize: vertical; min-height: 100px; }
 .form-row select { cursor: pointer; }
+.form-row select:hover { border-bottom-color: var(--accent); }
 .form-row select option { background: var(--dark); }
+.form-row select option:hover { background: var(--accent); color: var(--dark); }
 .form-submit { width: 100%; padding: 1rem; background: var(--accent); color: var(--dark); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; border: none; cursor: pointer; margin-top: 1rem; transition: all 0.2s; }
 .form-submit:hover { background: #d4ff4a; transform: translateY(-1px); }
 
