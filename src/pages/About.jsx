@@ -10,8 +10,7 @@ const timelineData = [
     company: 'Independent',
     desc: 'Actively participating in Capture The Flag (CTF) competitions. Solved challenges in web exploitation, cryptography, reverse engineering, and forensics. Achieved runner-up position in national-level CTF events and continuously improving cybersecurity skills.'
   },
-  { year: '2021–23', title: 'Full Stack Engineer', role: 'Full Time', company: 'StartupX', desc: 'Built React/Node.js platforms, integrated APIs, shipped features across multiple products.' },
-  { year: '2024–Now', title: 'Junior Developer', role: 'Full Time', company: 'Digital Agency', desc: 'Started career building responsive UIs and REST APIs for a fast-growing startup.' },
+  { year: '2024–Now', title: 'Junior Developer', role: 'Full Time', company: 'Codeship Pvt Ltd', desc: 'Started career building responsive UIs and REST APIs for a fast-growing startup.' },
 ];
 
 export default function About() {
