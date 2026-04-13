@@ -194,10 +194,12 @@ nav {
 .form-row select:hover { 
   border-bottom-color: var(--accent); /* Lime green border on hover */
 }
-.form-row select option { background: var(--dark); }
-.form-row select option:hover { 
-  background: var(--accent); 
-  color: var(--dark); /* Lime green bg/dark text on option hover */
+.form-row select option { background: var(--dark) !important; }
+.form-row select option:hover,
+.form-row select option:-moz-focus-inner:hover,
+.form-row select option[role] { 
+  background: #666 !important; 
+  color: #f0f0f0 !important; /* Dark grey bg/light text - forced for Netlify/prod */
 }
 .form-submit { width: 100%; padding: 1rem; background: var(--accent); color: var(--dark); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; border: none; cursor: pointer; margin-top: 1rem; transition: all 0.2s; }
 .form-submit:hover { background: #d4ff4a; transform: translateY(-1px); }
