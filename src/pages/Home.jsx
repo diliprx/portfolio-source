@@ -60,7 +60,15 @@ export default function Home() {
             <Link to="/contact" className="btn-ghost">Get in Touch</Link>
           </div>
         </div>
-        <div className="hero-scroll">Scroll</div>
+        <div className="hero-scroll">
+          <a href="https://leetcode.com/diliprx/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode" className="platform-icon">
+            <i className="fa-brands fa-leetcode" style={{color: '#c8f53f'}} />
+          </a>
+          <a href="https://tryhackme.com/p/CleObsecure" target="_blank" rel="noopener noreferrer" aria-label="TryHackMe" className="platform-icon">
+            <i className="fa-solid fa-laptop" style={{color: '#c8f53f'}} />
+          </a>
+          Scroll
+        </div>
       </section>
 
       {/* Stats */}
