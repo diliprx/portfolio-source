@@ -61,7 +61,7 @@ export default function Home() {
           </div>
         </div>
         <div className="hero-scroll">
-          <a href="https://leetcode.com/diliprx/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode" className="platform-icon">
+          <a href="https://leetcode.com/dilip__rx/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode" className="platform-icon">
             <i className="fa-brands fa-leetcode" style={{color: '#c8f53f'}} />
           </a>
           <a href="https://tryhackme.com/p/CleObsecure" target="_blank" rel="noopener noreferrer" aria-label="TryHackMe" className="platform-icon">
