@@ -1,192 +1,131 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { profile, socials } from '../data';
 
-/* ─── Existing components kept for compatibility ─── */
-export function SectionTitle({ eyebrow, title, subtitle, center = false }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-100px' });
-
+/* Page wrapper for route transitions */
+export function PageTransition({ children }) {
   return (
-    <div ref={ref} className={`mb-20 ${center ? 'text-center' : ''}`}>
-      {eyebrow && (
-        <motion.div
-          initial={{ opacity: 0, x: center ? 0 : -20 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-3 mb-6 px-4 py-2 rounded-full text-sm font-medium uppercase tracking-wider"
-          style={{ backgroundColor: 'rgba(200, 245, 63, 0.1)', color: '#c8f53f' }}
-        >
-          {eyebrow}
-        </motion.div>
-      )}
-      
-      <motion.h2
-        initial={{ opacity: 0, y: 30 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, delay: 0.1 }}
-        className="font-orbitron text-5xl md:text-7xl lg:text-[5rem] leading-tight tracking-tight"
-        style={{ background: 'linear-gradient(135deg, #c8f53f 0%, #d4ff4a 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
-      >
-        {title}
-      </motion.h2>
-
-      {subtitle && (
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-6 text-xl text-slate-300 max-w-2xl mx-auto"
-          style={{ color: '#888' }}
-        >
-          {subtitle}
-        </motion.p>
-      )}
-    </div>
-  );
-}
-
-/* ─── New components from HTML theme ─── */
-
-/* Marquee for Achievements */
-export function Marquee({ children }) {
-  return (
-    <div className="ach-marquee">
-      <div className="marquee-inner">
-        {children}
-        {children} // Duplicate for seamless loop
-      </div>
-    </div>
-  );
-}
-
-/* Strip Item for Home */
-export function StripItem({ bgGradient, label, onClick }) {
-  return (
-    <motion.div 
-      className="strip-img"
-      whileHover={{ scale: 1.02 }}
-      onClick={onClick}
-    >
-      <div 
-        className="strip-img-inner"
-        style={{ 
-          background: bgGradient,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
-        <div style={{ fontSize: '4rem', fontWeight: 900, opacity: 0.2, color: 'white' }}>
-          {/* Content set by parent */}
-        </div>
-      </div>
-      <div className="strip-label">{label}</div>
-    </motion.div>
-  );
-}
-
-/* Project Item */
-export function ProjItem({ num, title, description, tags, category, onClick }) {
-  return (
-    <motion.div 
-      className="proj-item group"
-      whileHover={{ scale: 1.01 }}
-      onClick={onClick}
-    >
-      <div className="proj-num">{num}</div>
-      <div className="proj-info">
-        <h3>{title}</h3>
-        <p>{description}</p>
-        <div className="proj-tags">
-          {tags.map((tag, i) => (
-            <span key={i} className="proj-tag">{tag}</span>
-          ))}
-        </div>
-      </div>
-      <div className="proj-arrow">→</div>
-    </motion.div>
-  );
-}
-
-/* Filter Button for Projects */
-export function FilterBtn({ children, active, onClick }) {
-  return (
-    <motion.button
-      className={`filter-btn ${active ? 'active' : ''}`}
-      onClick={onClick}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
+    <motion.main
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+      className="page"
     >
       {children}
-    </motion.button>
+      <Footer />
+    </motion.main>
   );
 }
 
-/* Contact Info Item */
-export function ContactInfoItem({ label, value }) {
+/* Fade-up when scrolled into view */
+export function Reveal({ children, delay = 0, className, as = 'div' }) {
+  const Tag = motion[as];
   return (
-    <div className="contact-info-item">
-      <div className="info-label">{label}</div>
-      <div className="info-val" style={{ color: value === '● Available for work' ? '#c8f53f' : 'inherit', animation: value === '● Available for work' ? 'blink 1.5s ease-in-out infinite' : 'none' }}>
-        {value}
+    <Tag
+      className={className}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.5, delay, ease: 'easeOut' }}
+    >
+      {children}
+    </Tag>
+  );
+}
+
+/* Eyebrow + heading + optional lead text */
+export function SectionHeader({ eyebrow, title, lead, center = false }) {
+  return (
+    <Reveal className={`section-header ${center ? 'center' : ''}`}>
+      {eyebrow && <div className="eyebrow">{eyebrow}</div>}
+      <h2 className="section-title">{title}</h2>
+      {lead && <p className="section-lead">{lead}</p>}
+    </Reveal>
+  );
+}
+
+/* Project card */
+export function ProjectCard({ project, index = 0 }) {
+  const { title, context, icon, description, tags, link } = project;
+  return (
+    <Reveal delay={index * 0.08} className="card project-card">
+      <div className="project-top">
+        <div className="icon-box"><i className={icon} /></div>
+        {link ? (
+          <a href={link} target="_blank" rel="noopener noreferrer" className="icon-link" aria-label={`${title} on GitHub`}>
+            <i className="fa-brands fa-github" />
+          </a>
+        ) : (
+          <span className="private-badge">Private repo</span>
+        )}
+      </div>
+      <h3>{title}</h3>
+      <div className="project-context">{context}</div>
+      <p>{description}</p>
+      <div className="tags">
+        {tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
+      </div>
+      {link && (
+        <a href={link} target="_blank" rel="noopener noreferrer" className="text-link">
+          View on GitHub <i className="fa-solid fa-arrow-up-right-from-square" />
+        </a>
+      )}
+    </Reveal>
+  );
+}
+
+/* Infinite marquee (children are rendered twice for a seamless loop) */
+export function Marquee({ items }) {
+  return (
+    <div className="marquee" aria-hidden="true">
+      <div className="marquee-inner">
+        {[...items, ...items].map((item, i) => (
+          <span key={i} className="marquee-item">{item}</span>
+        ))}
       </div>
     </div>
+  );
+}
+
+export function SocialLinks({ className = '' }) {
+  return (
+    <div className={`socials ${className}`}>
+      {socials.map(({ label, href, icon }) => (
+        <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}>
+          <i className={icon} />
+        </a>
+      ))}
+    </div>
+  );
+}
+
+export function Footer() {
+  return (
+    <footer className="footer">
+      <div className="container footer-inner">
+        <div>
+          <Link to="/" className="logo">DKV<span>.</span></Link>
+          <p className="footer-note">© {new Date().getFullYear()} {profile.name}. Built with React & Vite.</p>
+        </div>
+        <SocialLinks />
+      </div>
+    </footer>
   );
 }
 
 /* Toast Notification */
-export function Toast({ show, message = "Message sent! I'll be in touch soon." }) {
+export function Toast({ show, message }) {
   return (
-    <motion.div 
+    <motion.div
       className="toast"
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: show ? 1 : 0, y: show ? 0 : 20 }}
       transition={{ duration: 0.3 }}
-      style={{ display: show ? 'block' : 'none' }}
+      style={{ pointerEvents: show ? 'auto' : 'none' }}
+      role="status"
     >
       {message}
     </motion.div>
   );
 }
-
-/* Page wrapper for transitions */
-export function PageTransition({ children }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
-      className="page active min-h-screen"
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-/* Stat Card (updated theme) */
-export function StatCard({ number, label }) {
-  return (
-    <motion.div 
-      className="stat-item"
-      whileHover={{ scale: 1.02 }}
-    >
-      <div className="stat-num" style={{ color: '#c8f53f' }}>{number}</div>
-      <div className="stat-label">{label}</div>
-    </motion.div>
-  );
-}
-
-/* Achievement Card */
-export function AchCard({ title, meta }) {
-  return (
-    <motion.div 
-      className="ach-card"
-      whileHover={{ scale: 1.02 }}
-    >
-      <h3>{title}</h3>
-      <div className="ach-meta">{meta}</div>
-    </motion.div>
-  );
-}
-

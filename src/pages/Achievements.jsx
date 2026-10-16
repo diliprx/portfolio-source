@@ -1,72 +1,79 @@
-import { motion } from 'framer-motion';
-import { PageTransition, Marquee, AchCard } from '../components/UI';
 import { Link } from 'react-router-dom';
+import { PageTransition, Reveal, SectionHeader, Marquee } from '../components/UI';
+import { achievements, certifications, featuredAchievement } from '../data';
 
-const achievements = [
-  { title: 'Secured 1st prize, CyberCom & Zapsters (CTF)', meta: '23/02/2026' },
-  { title: 'Secured 3rd position, Sri New Prince Bhavani Engineering College (HACKATHON)', meta: '01/07/2025' },
-  { title: 'Completed 3rd Position, SRMIST & h7tex (CTF)', meta: '01/07/2024' },
-  { title: 'Secured 3rd Position, Sri Venkateswara College of Engineering(CTF)', meta: '27/03/2026' },
-  { title: 'Finished 5th Position, Sri Sairam Engineering College (HACKATHON)', meta: '28/10/2025' },
-  { title: 'Completed 4th Position, Sri Venkateswara College of Engineering (HACKATHON)', meta: '25/11/2025' },
-  { title: 'Completed 10th Position, Kumaraguru College of Technology (CTF)', meta: '14/02/2026' },
-];
+const typeIcon = {
+  ctf: 'fa-solid fa-flag',
+  hackathon: 'fa-solid fa-trophy',
+};
 
 const marqueeItems = [
-  '1st Prize CyberCom & Zapsters CTF', '3rd Hackathon Sri New Prince Bhavani', '3rd CTF SRMIST & h7tex',
-  '3rd CTF Sri Venkateswara College', '5th Hackathon Sri Sairam', '4th Hackathon Sri Venkateswara',
-  '10th CTF Kumaraguru College'
+  'Accenture Bug Bounty Hall of Fame', '1st Prize CyberCom & Zapsters CTF', '3rd Hackathon Prince Shri Bhavani',
+  '3rd CTF SRMIST & h7tex', '4th Hackathon Sri Venkateswara', '10th TN Police Hackathon 2025',
+  'Runner-Up Velammal Web Dev Hackathon', '2nd COGNEBULA Web Dev Hackathon',
 ];
 
 export default function Achievements() {
   return (
     <PageTransition>
-      {/* Header */}
-      <header className="ach-header container mx-auto px-6">
-        <div className="tag">
-          <span>✦</span> Recognition
-        </div>
-        <h2>
-          Achieve<br />
-          <em>ments</em>
-        </h2>
-      </header>
+      <section className="page-hero container">
+        <Reveal>
+          <div className="eyebrow">Recognition</div>
+          <h1 className="page-title">Achievements</h1>
+          <p className="lead">Bug bounty recognition, CTF podiums, and hackathon results.</p>
+        </Reveal>
+      </section>
 
-      {/* Marquee */}
-      <Marquee>
-        {marqueeItems.map((item, index) => (
-          <div key={index} className="marquee-item">
-            {item}
+      <Marquee items={marqueeItems} />
+
+      <section className="section container">
+        <Reveal className="highlight">
+          <div className="icon-box lg"><i className="fa-solid fa-bug" /></div>
+          <div>
+            <div className="eyebrow">Bug Bounty</div>
+            <h3>{featuredAchievement.title}</h3>
+            <p>{featuredAchievement.desc}</p>
           </div>
-        ))}
-      </Marquee>
-
-      {/* Grid */}
-      <section className="ach-grid container mx-auto px-6">
-        {achievements.map((ach, index) => (
-          <AchCard key={index} {...ach} />
-        ))}
-        
+        </Reveal>
       </section>
 
-      {/* CTA */}
-      <section className="ach-end container mx-auto px-6 py-20 text-center border-t border-current/10">
-        <div className="cta-wrapper">
-          <Link to="/contact" className="btn-primary inline-block">Let's Work Together</Link>
+      <section className="section container">
+        <SectionHeader eyebrow="Competitions" title="CTFs & hackathons" />
+        <div className="grid grid-3">
+          {achievements.map((a, i) => (
+            <Reveal key={a.title + a.org} delay={(i % 3) * 0.06} className="card ach-card">
+              <div className="ach-top">
+                <div className="icon-box sm"><i className={typeIcon[a.type]} /></div>
+                <span className="badge">{a.type === 'ctf' ? 'CTF' : 'Hackathon'}</span>
+              </div>
+              <h3>{a.title}</h3>
+              <p className="ach-org">{a.org}</p>
+              {a.note && <p className="ach-note">{a.note}</p>}
+              {a.date && <div className="ach-date">{a.date}</div>}
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="container mx-auto px-6 mt-12 md:mt-20">
-        <div className="footer-logo">DILIP<span>.</span>K.VENKATESAN</div>
-        <p>© 2026 Dilip Kumar Venkatesan. All rights reserved.</p>
-        <div className="footer-links">
-          <a href="https://github.com/diliprx" target='_blank'>GitHub</a>
-          <a href="https://www.linkedin.com/in/diliprx/" target='_blank'>LinkedIn</a>
-          <a href="https://x.com/dilip__rx" target='_blank'>Twitter</a>
+      <section className="section container">
+        <SectionHeader eyebrow="Certifications" title="Credentials" />
+        <div className="grid grid-4">
+          {certifications.map((c, i) => (
+            <Reveal key={c.title} delay={i * 0.06} className="card cert-card">
+              <div className="icon-box sm"><i className="fa-solid fa-certificate" /></div>
+              <h3>{c.title}</h3>
+              <p>{c.issuer}</p>
+            </Reveal>
+          ))}
         </div>
-      </footer>
+      </section>
+
+      <section className="section container">
+        <Reveal className="cta">
+          <h2>Want someone who thinks like an <span className="accent">attacker</span>?</h2>
+          <Link to="/contact" className="btn btn-primary">Let's work together <i className="fa-solid fa-arrow-right" /></Link>
+        </Reveal>
+      </section>
     </PageTransition>
   );
 }
-

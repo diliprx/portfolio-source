@@ -1,113 +1,102 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { PageTransition, ContactInfoItem, Toast } from '../components/UI';
-import { Link } from 'react-router-dom';
+import { PageTransition, Reveal, Toast } from '../components/UI';
+import { profile } from '../data';
+
+const contactItems = [
+  { icon: 'fa-solid fa-envelope', label: 'Email', value: profile.email, href: `mailto:${profile.email}` },
+  { icon: 'fa-brands fa-linkedin', label: 'LinkedIn', value: 'linkedin.com/in/diliprx', href: 'https://www.linkedin.com/in/diliprx/' },
+  { icon: 'fa-brands fa-github', label: 'GitHub', value: 'github.com/diliprx', href: 'https://github.com/diliprx' },
+  { icon: 'fa-solid fa-location-dot', label: 'Location', value: profile.location },
+];
+
+const emptyForm = { name: '', email: '', type: '', message: '' };
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    type: '',
-    message: ''
-  });
-  const [status, setStatus] = useState('idle');
+  const [formData, setFormData] = useState(emptyForm);
   const [toastShow, setToastShow] = useState(false);
 
+  const update = field => e => setFormData({ ...formData, [field]: e.target.value });
+
+  // No backend: open the visitor's mail client with the message pre-filled
   const handleSubmit = (e) => {
     e.preventDefault();
-    setStatus('sending');
-    setTimeout(() => {
-      setStatus('success');
-      setToastShow(true);
-      setFormData({ name: '', email: '', type: '', message: '' });
-      setTimeout(() => setToastShow(false), 3500);
-    }, 1500);
+    const subject = `${formData.type || 'Portfolio enquiry'} — ${formData.name}`;
+    const body = `${formData.message}\n\n— ${formData.name} (${formData.email})`;
+    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setToastShow(true);
+    setFormData(emptyForm);
+    setTimeout(() => setToastShow(false), 3500);
   };
 
   return (
     <PageTransition>
-      <Toast show={toastShow} />
+      <Toast show={toastShow} message="Opening your email app…" />
 
-      {/* Hero */}
-      <section className="contact-hero container mx-auto px-6">
-        <div className="contact-left">
-          <div className="tag">Get in Touch</div>
-          <h2>
-            Let's Build<br />
-            Something<br />
-            <em>Great</em>
-          </h2>
-          <p>Have a project in mind? I'd love to hear about it. Let's talk about how we can work together to create something exceptional.</p>
-          <div>
-            <ContactInfoItem label="Email" value="dilipkumarv1866@gmail.com" />
-            <ContactInfoItem label="Location" value="Chennai, Tamil Nadu, India" />
-            <ContactInfoItem label="Status" value="● Available for work" />
-            <ContactInfoItem label="Response" value="Within 24 hours" />
-          </div>
-        </div>
-        <div className="contact-form">
-          <form onSubmit={handleSubmit}>
-            <div className="form-row">
-              <label>Full Name</label>
-              <input
-                type="text"
-                placeholder="Dilip K. Venkatesan"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-              />
+      <section className="page-hero container">
+        <div className="contact-grid">
+          <Reveal>
+            <div className="eyebrow">Get in touch</div>
+            <h1 className="page-title">Let's build something <span className="accent">great</span>.</h1>
+            <p className="lead">
+              Hiring for a Software Engineer, Frontend, or Cyber Security role, or have a project in mind?
+              Send me a message and I'll get back to you.
+            </p>
+            <div className="status-pill"><span className="dot" /> Available for work</div>
+            <div className="contact-list">
+              {contactItems.map(item => {
+                const content = (
+                  <>
+                    <div className="icon-box sm"><i className={item.icon} /></div>
+                    <div>
+                      <div className="fact-label">{item.label}</div>
+                      <div className="fact-value">{item.value}</div>
+                    </div>
+                  </>
+                );
+                return item.href ? (
+                  <a key={item.label} href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="contact-item">
+                    {content}
+                  </a>
+                ) : (
+                  <div key={item.label} className="contact-item">{content}</div>
+                );
+              })}
             </div>
-            <div className="form-row">
-              <label>Email Address</label>
-              <input
-                type="email"
-                placeholder="john@example.com"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-              />
-            </div>
-            <div className="form-row">
-              <label>Project Type</label>
-              <select
-                value={formData.type}
-                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-              >
-                <option value="">Select a type...</option>
-                <option>Web Development</option>
-                <option>Mobile App</option>
-                <option>AI/ML Project</option>
-                <option>UI/UX Design</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div className="form-row">
-              <label>Message</label>
-              <textarea
-                placeholder="Tell me about your project..."
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                required
-              />
-            </div>
-            <button type="submit" className="form-submit" disabled={status === 'sending'}>
-              {status === 'sending' ? 'Sending...' : 'Send Message →'}
-            </button>
-          </form>
+          </Reveal>
+
+          <Reveal delay={0.1} className="card contact-form">
+            <form onSubmit={handleSubmit}>
+              <div className="form-grid">
+                <div className="form-row">
+                  <label htmlFor="name">Full name</label>
+                  <input id="name" type="text" placeholder="Your name" value={formData.name} onChange={update('name')} required />
+                </div>
+                <div className="form-row">
+                  <label htmlFor="email">Email address</label>
+                  <input id="email" type="email" placeholder="you@company.com" value={formData.email} onChange={update('email')} required />
+                </div>
+              </div>
+              <div className="form-row">
+                <label htmlFor="type">Reason</label>
+                <select id="type" value={formData.type} onChange={update('type')}>
+                  <option value="">Select a reason...</option>
+                  <option>Job / Internship Opportunity</option>
+                  <option>Web Development</option>
+                  <option>Cyber Security / VAPT</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div className="form-row">
+                <label htmlFor="message">Message</label>
+                <textarea id="message" placeholder="Tell me about the role or project..." value={formData.message} onChange={update('message')} required />
+              </div>
+              <button type="submit" className="btn btn-primary btn-block">
+                Send message <i className="fa-solid fa-paper-plane" />
+              </button>
+            </form>
+          </Reveal>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="container mx-auto px-6">
-        <div className="footer-logo">DILIP<span>.</span>K.VENKATESAN</div>
-        <p>© 2026 Dilip Kumar Venkatesan. All rights reserved.</p>
-        <div className="footer-links">
-          <a href="https://github.com/diliprx" target='_blank'>GitHub</a>
-          <a href="https://www.linkedin.com/in/diliprx/" target='_blank'>LinkedIn</a>
-          <a href="https://x.com/dilip__rx" target='_blank'>Twitter</a>
-        </div>
-      </footer>
     </PageTransition>
   );
 }
-

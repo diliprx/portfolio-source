@@ -1,43 +1,13 @@
 import { motion } from 'framer-motion';
-import { PageTransition, SectionTitle, StatCard, StripItem } from '../components/UI';
 import { Link } from 'react-router-dom';
+import { PageTransition, Reveal, SectionHeader, ProjectCard, SocialLinks } from '../components/UI';
+import { profile, stats, services, projects, featuredAchievement } from '../data';
 
-const stats = [
-  { number: '3+', label: 'Years Experience' },
-  { number: '40+', label: 'Projects Completed' },
-  { number: '2000+', label: 'Problem Solved' },
-  { number: '8', label: 'Awards Won' },
-];
-
-const stripItems = [
-  {
-    bgGradient: 'linear-gradient(135deg, #1a2a0a, #0d1a0d)',
-    label: 'Web Dev',
-    text: 'WEB',
-    color: 'rgba(200,245,63,0.2)',
-    onClick: () => window.location.href = '/projects'
-  },
-  {
-    bgGradient: 'linear-gradient(135deg, #1a0a0a, #1a0d0d)',
-    label: 'Mobile Apps',
-    text: 'APP',
-    color: 'rgba(255,100,80,0.2)',
-    onClick: () => window.location.href = '/projects'
-  },
-  {
-    bgGradient: 'linear-gradient(135deg, #0a0a1a, #0d0d1a)',
-    label: 'AI & ML',
-    text: 'AI',
-    color: 'rgba(100,150,255,0.2)',
-    onClick: () => window.location.href = '/projects'
-  },
-  {
-    bgGradient: 'linear-gradient(135deg, #1a1a0a, #181808)',
-    label: 'Design',
-    text: 'UI',
-    color: 'rgba(255,220,50,0.2)',
-    onClick: () => window.location.href = '/projects'
-  },
+const terminalLines = [
+  { prompt: 'whoami', out: 'dilip — frontend developer & security engineer' },
+  { prompt: 'cat stack.txt', out: 'react · typescript · fastapi · mysql' },
+  { prompt: 'cat security.txt', out: 'owasp top 10 · vapt · burp suite · nmap' },
+  { prompt: 'cat status.txt', out: 'open to software & security roles', accent: true },
 ];
 
 export default function Home() {
@@ -45,93 +15,133 @@ export default function Home() {
     <PageTransition>
       {/* Hero */}
       <section className="hero">
-        <div className="hero-bg-text">DKV</div>
-        <div className="container mx-auto px-6 relative z-10 text-left">
-          <div className="hero-badge">Available for work</div>
-          <h1>
-            Dilip<br />
-            <em>K. Venkatesan</em>
-          </h1>
-          <p className="hero-sub">
-            Full-stack developer and cybersecurity enthusiast focused on building secure, resilient, and cutting-edge digital experiences.
-          </p>
-          <div className="hero-actions">
-            <Link to="/projects" className="btn-primary">View Projects</Link>
-            <Link to="/contact" className="btn-ghost">Get in Touch</Link>
+        <div className="hero-glow" aria-hidden="true" />
+        <div className="container hero-grid">
+          <div>
+            <motion.div
+              className="status-pill"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <span className="dot" /> Available for work
+            </motion.div>
+            <motion.h1
+              className="hero-title"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              Hi, I'm Dilip.<br />
+              I build <span className="accent">secure</span> web apps.
+            </motion.h1>
+            <motion.p
+              className="hero-sub"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              Frontend & full-stack developer and Computer Science (Cyber Security) student from {profile.location.split(',')[0]}.
+              I work with React.js, TypeScript, FastAPI, and MySQL, and I break things in CTFs and bug bounties.
+            </motion.p>
+            <motion.div
+              className="hero-actions"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <Link to="/projects" className="btn btn-primary">View Projects <i className="fa-solid fa-arrow-right" /></Link>
+              <a href={profile.cv} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                <i className="fa-solid fa-download" /> Resume
+              </a>
+            </motion.div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.45 }}>
+              <SocialLinks className="hero-socials" />
+            </motion.div>
           </div>
-        </div>
-        <div className="hero-scroll">
-          <a href="https://leetcode.com/dilip__rx/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode" className="platform-icon">
-            <i className="fa-brands fa-leetcode" style={{color: '#c8f53f'}} />
-          </a>
-          <a href="https://tryhackme.com/p/CleObsecure" target="_blank" rel="noopener noreferrer" aria-label="TryHackMe" className="platform-icon">
-            <i className="fa-solid fa-laptop" style={{color: '#c8f53f'}} />
-          </a>
-          Scroll
+
+          <motion.div
+            className="terminal"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            aria-label="Profile summary"
+          >
+            <div className="terminal-bar">
+              <span /><span /><span />
+              <div className="terminal-title">dilip@portfolio:~</div>
+            </div>
+            <div className="terminal-body">
+              {terminalLines.map(({ prompt, out, accent }) => (
+                <div key={prompt} className="terminal-line">
+                  <div><span className="accent">$</span> {prompt}</div>
+                  <div className={accent ? 'accent' : 'muted'}>{out}</div>
+                </div>
+              ))}
+              <div><span className="accent">$</span> <span className="cursor" /></div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Stats */}
-      <section className="home-stats container mx-auto px-6">
-        {stats.map((stat, index) => (
-          <StatCard key={index} {...stat} />
-        ))}
+      <section className="container">
+        <div className="stats">
+          {stats.map((stat, i) => (
+            <Reveal key={stat.label} delay={i * 0.06} className="stat">
+              <div className="stat-num">{stat.number}</div>
+              <div className="stat-label">{stat.label}</div>
+            </Reveal>
+          ))}
+        </div>
       </section>
 
-      {/* Strip */}
-      {/* <section className="home-strip container mx-auto px-6">
-        {stripItems.map((item, index) => (
-          <StripItem key={index} {...item} />
-        ))}
-      </section> */}
-
-      <div className="home-strip">
-        {stripItems.map((item, index) => (
-          <div key={index} className="strip-img" onClick={item.onClick}>
-
-            <div
-              className="strip-img-inner"
-              style={{
-                background: item.bgGradient,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <div
-                style={{
-                  fontSize: '4rem',
-                  fontWeight: 900,
-                  color: item.color
-                }}
-              >
-                {item.text}
-              </div>
-            </div>
-
-            <div className="strip-label">{item.label}</div>
-
-          </div>
-        ))}
-      </div>
-
-      {/* <section className="container mx-auto px-6 py-20 md:py-32 border-b border-current/10 flex items-center justify-between min-h-[250px] gap-12">       
-        <blockquote className="font-semibold text-2xl lg:text-3xl leading-relaxed text-center lg:text-left max-w-2xl">
-          It doesn't matter where you start, it's how you <em>progress</em> from there.
-        </blockquote>   
-        <Link to="/about" className="btn-ghost whitespace-nowrap">My Story →</Link>     
-      </section> */}
-
-      {/* Footer */}
-      <footer className="container mx-auto px-6">
-        <div className="footer-logo">DILIP<span>.</span>K.VENKATESAN</div>
-        <p>© 2026 Dilip Kumar Venkatesan. All rights reserved.</p>
-        <div className="footer-links">
-          <a href="https://github.com/diliprx" target='_blank'>GitHub</a>
-          <a href="https://www.linkedin.com/in/diliprx/" target='_blank'>LinkedIn</a>
-          <a href="https://x.com/dilip__rx" target='_blank'>Twitter</a>
+      {/* What I do */}
+      <section className="section container">
+        <SectionHeader eyebrow="What I do" title="Development meets security" lead="I build web applications end to end and look at them the way an attacker would." />
+        <div className="grid grid-4">
+          {services.map((s, i) => (
+            <Reveal key={s.title} delay={i * 0.06} className="card service-card">
+              <div className="icon-box"><i className={s.icon} /></div>
+              <h3>{s.title}</h3>
+              <p>{s.desc}</p>
+            </Reveal>
+          ))}
         </div>
-      </footer>
+      </section>
+
+      {/* Featured projects */}
+      <section className="section container">
+        <div className="section-row">
+          <SectionHeader eyebrow="Selected work" title="Featured projects" />
+          <Link to="/projects" className="text-link">All projects <i className="fa-solid fa-arrow-right" /></Link>
+        </div>
+        <div className="grid grid-3">
+          {projects.map((p, i) => <ProjectCard key={p.title} project={p} index={i} />)}
+        </div>
+      </section>
+
+      {/* Highlight */}
+      <section className="section container">
+        <Reveal className="highlight">
+          <div className="icon-box lg"><i className="fa-solid fa-bug" /></div>
+          <div>
+            <div className="eyebrow">Recognition</div>
+            <h3>{featuredAchievement.title}</h3>
+            <p>{featuredAchievement.desc} Also 1st Prize at the CyberCom & Zapsters CTF.</p>
+          </div>
+          <Link to="/achievements" className="btn btn-outline">All achievements</Link>
+        </Reveal>
+      </section>
+
+      {/* CTA */}
+      <section className="section container">
+        <Reveal className="cta">
+          <h2>Let's build something <span className="accent">secure</span> together.</h2>
+          <p>Open to Software Engineer, Frontend Engineer, and Cyber Security roles.</p>
+          <Link to="/contact" className="btn btn-primary">Get in touch <i className="fa-solid fa-arrow-right" /></Link>
+        </Reveal>
+      </section>
     </PageTransition>
   );
 }

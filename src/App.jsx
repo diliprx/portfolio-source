@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
@@ -9,6 +10,11 @@ import Contact from './pages/Contact';
 
 function AnimatedRoutes() {
   const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
@@ -25,10 +31,8 @@ function AnimatedRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
-    <div className="min-h-screen">
-        <Navbar />
-        <AnimatedRoutes />
-      </div>
+      <Navbar />
+      <AnimatedRoutes />
     </BrowserRouter>
   );
 }

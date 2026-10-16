@@ -1,105 +1,103 @@
-import { motion } from 'framer-motion';
-import { PageTransition } from '../components/UI';
 import { Link } from 'react-router-dom';
+import { PageTransition, Reveal, SectionHeader } from '../components/UI';
+import { profile, experience, education, skillGroups } from '../data';
 
-const timelineData = [
-  {
-    year: '2023–Now',
-    title: 'CTF Player',
-    role: 'Competitive / Self-Learned',
-    company: 'Independent',
-    desc: 'Actively participating in Capture The Flag (CTF) competitions. Solved challenges in web exploitation, cryptography, reverse engineering, and forensics. Achieved runner-up position in national-level CTF events and continuously improving cybersecurity skills.'
-  },
-  { year: '2024–Now', title: 'Junior Developer', role: 'Full Time', company: 'Codeship Pvt Ltd', desc: 'Started career building responsive UIs and REST APIs for a fast-growing startup.' },
+const quickFacts = [
+  { icon: 'fa-solid fa-location-dot', label: 'Based in', value: 'Chennai, India' },
+  { icon: 'fa-solid fa-graduation-cap', label: 'Studying', value: 'B.E. CSE (Cyber Security)' },
+  { icon: 'fa-solid fa-briefcase', label: 'Looking for', value: 'SWE / Frontend / Security roles' },
+  { icon: 'fa-solid fa-bug', label: 'Recognition', value: 'Accenture Bug Bounty Hall of Fame' },
 ];
 
 export default function About() {
   return (
     <PageTransition>
-      {/* Hero */}
-      <section className="about-hero container mx-auto px-6">
-        <div>
-          <div className="about-tag">About Me</div>
-          <h2>Building<br />Futures<br />Through<br />Code</h2>
-          <p>
-            Full-stack developer and cybersecurity enthusiast with a strong focus on building secure, scalable, and high-performance applications. Experienced in backend systems, modern frontend frameworks, and real-world security practices.
-          </p>
+      {/* Intro */}
+      <section className="page-hero container">
+        <div className="about-grid">
+          <Reveal>
+            <div className="eyebrow">About me</div>
+            <h1 className="page-title">Developer by craft,<br /><span className="accent">security</span> by mindset.</h1>
+            <p className="lead">
+              I'm a Computer Science and Engineering (Cyber Security) student and Frontend Developer with internship
+              experience in React.js frontend development and Python-based security automation.
+            </p>
+            <p className="lead">
+              I build full-stack applications with React.js, TypeScript, FastAPI, and MySQL, grounded in Data Structures &
+              Algorithms, OOP, DBMS, and secure coding (OWASP Top 10, RBAC, encryption). Outside of work, I compete in CTFs
+              and hunt bugs, with hands-on Web Security and VAPT experience.
+            </p>
+            <div className="hero-actions">
+              <Link to="/projects" className="btn btn-primary">My Projects</Link>
+              <a href={profile.cv} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                <i className="fa-solid fa-download" /> Download CV
+              </a>
+            </div>
+          </Reveal>
 
-          <p>
-            Active CTF player with hands-on expertise in web security, cryptography, reverse engineering, and vulnerability assessment. Passionate about identifying security flaws and implementing robust defenses.
-          </p>
-
-          <p>
-            Based in Chennai, India. Open to freelance and full-time opportunities in software development and cybersecurity.
-          </p>
-          <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem', flexWrap: 'wrap' }}>
-            <Link to="/projects" className="btn-primary">My Projects</Link>
-            <button
-              className="btn-ghost"
-              onClick={() => window.open('https://drive.google.com/file/d/1zy6Ip63b-tsEUTYl8XIWQZk1eoCs-z1z/view', '_blank')}
-            >
-              Download CV
-            </button>
-          </div>
-        </div>
-        <div className="about-portrait">
-          <div className="portrait-placeholder">
-            <div className="portrait-initials">DKV</div>
-          </div>
-          <div className="portrait-frame"></div>
-        </div>
-      </section>
-
-      {/* Timeline */}
-      <section className="about-timeline container mx-auto px-6">
-        <div className="timeline-header">Experience</div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem' }}>
-          <div>
-            {timelineData.slice(0, 3).map((item, index) => (
-              <div key={index} className="timeline-item">
-                <div className="timeline-year">{item.year}</div>
-                <div className="timeline-content">
-                  <h4>{item.title}</h4>
-                  <p>{item.desc}</p>
+          <Reveal delay={0.1} className="card facts">
+            {quickFacts.map(f => (
+              <div key={f.label} className="fact">
+                <div className="icon-box sm"><i className={f.icon} /></div>
+                <div>
+                  <div className="fact-label">{f.label}</div>
+                  <div className="fact-value">{f.value}</div>
                 </div>
               </div>
             ))}
-          </div>
-          <div>
-            <div className="timeline-header" style={{ paddingTop: 0 }}>Skills</div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginBottom: '3rem' }}>
-              <span style={{ padding: '0.5rem 1rem', border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#888', transition: 'all 0.2s', cursor: 'default' }}>React</span>
-              <span style={{ padding: '0.5rem 1rem', border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#888', transition: 'all 0.2s', cursor: 'default' }}>Node.js</span>
-              <span style={{ padding: '0.5rem 1rem', border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#888', transition: 'all 0.2s', cursor: 'default' }}>TypeScript</span>
-              <span style={{ padding: '0.5rem 1rem', border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#888', transition: 'all 0.2s', cursor: 'default' }}>Java</span>
-              <span style={{ padding: '0.5rem 1rem', border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#888', transition: 'all 0.2s', cursor: 'default' }}>C/C++</span>
-              <span style={{ padding: '0.5rem 1rem', border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#888', transition: 'all 0.2s', cursor: 'default' }}>Wireshark</span>
-              <span style={{ padding: '0.5rem 1rem', border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#888', transition: 'all 0.2s', cursor: 'default' }}>Flask</span>
-              <span style={{ padding: '0.5rem 1rem', border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#888', transition: 'all 0.2s', cursor: 'default' }}>Python</span>
-              <span style={{ padding: '0.5rem 1rem', border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#888', transition: 'all 0.2s', cursor: 'default' }}>Mysql</span>
-              <span style={{ padding: '0.5rem 1rem', border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#888', transition: 'all 0.2s', cursor: 'default' }}>TailwindCSS</span>
-            </div>
-            <div className="timeline-item">
-              <div className="timeline-year">2023–27</div>
-              <div className="timeline-content">
-                <h4>B.E Computer Science and Enginerring Sepcialized with Cyber Secuirty</h4>
-                <p>Pre Final Year.</p>
-              </div>
-            </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="container mx-auto px-6">
-        <div className="footer-logo">DILIP<span>.</span>K.VENKATESAN</div>
-        <p>© 2026 Dilip Kumar Venkatesan. All rights reserved.</p>
-        <div className="footer-links">
-          <a href="https://github.com/diliprx" target='_blank'>GitHub</a>
-          <a href="https://www.linkedin.com/in/diliprx/" target='_blank'>LinkedIn</a>
-          <a href="https://x.com/dilip__rx" target='_blank'>Twitter</a>
+      {/* Experience */}
+      <section className="section container">
+        <SectionHeader eyebrow="Experience" title="Where I've worked" />
+        <div className="timeline">
+          {experience.map((item, i) => (
+            <Reveal key={item.role} delay={i * 0.06} className="timeline-item">
+              <div className="timeline-dot" />
+              <div className="timeline-period">{item.period}</div>
+              <div className="card timeline-card">
+                <h3>{item.role}</h3>
+                <div className="timeline-company">{item.company}</div>
+                <ul>
+                  {item.points.map(pt => <li key={pt}>{pt}</li>)}
+                </ul>
+              </div>
+            </Reveal>
+          ))}
         </div>
-      </footer>
+      </section>
+
+      {/* Skills */}
+      <section className="section container">
+        <SectionHeader eyebrow="Skills" title="Tools I work with" />
+        <div className="grid grid-2">
+          {skillGroups.map((group, i) => (
+            <Reveal key={group.title} delay={i * 0.06} className="card">
+              <h3 className="card-title">{group.title}</h3>
+              <div className="tags">
+                {group.items.map(item => <span key={item} className="tag">{item}</span>)}
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Education */}
+      <section className="section container">
+        <SectionHeader eyebrow="Education" title="Academic background" />
+        <div className="grid grid-2">
+          {education.map((ed, i) => (
+            <Reveal key={ed.title} delay={i * 0.06} className="card edu-card">
+              <div className="edu-period">{ed.period}</div>
+              <h3>{ed.title}</h3>
+              <p>{ed.place}</p>
+              <div className="edu-detail">{ed.detail}</div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
     </PageTransition>
   );
 }

@@ -22,7 +22,8 @@ Showcasing my projects, achievements, and skills as a **Cybersecurity Enthusiast
 
 - 👨‍💻 Full-stack developer with strong frontend & backend skills  
 - 🔐 Cybersecurity enthusiast and active **CTF player**  
-- 🏆 CTF Runner-up at **SRM Kattankulathur**  
+- 🐞 **Accenture Bug Bounty Hall of Fame**  
+- 🏆 1st Prize at **CyberCom & Zapsters CTF**, 3rd Prize at **SRMIST & h7tex CTF**  
 - 🚀 Passionate about building secure and scalable applications  
 
 ---
