@@ -134,7 +134,7 @@ export const featuredAchievement = {
 
 export const achievements = [
   { title: '1st Prize — CTF', org: 'CyberCom & Zapsters', date: 'Feb 2026', type: 'ctf' },
-  {titile:'1st Prize — CTF', org: 'IEEE TECHX MADRDAS & Sairam Engineering College', date: 'Oct 2026', type: 'ctf' },
+  { title: '1st Prize — CTF', org: 'IEEE TECHX MADRAS & Sairam Engineering College', date: 'Oct 2026', type: 'ctf' },
   { title: '3rd Prize — 36-Hour Hackathon', org: 'Prince Shri Bhavani College of Engineering & Technology', note: 'Built a crime hotspot tracking solution', date: 'Jul 2025', type: 'hackathon' },
   { title: '3rd Prize — CTF', org: 'SRMIST & h7tex', date: 'Jul 2024', type: 'ctf' },
   { title: '4th Place — Hackathon', org: 'Sri Venkateswara College of Engineering', date: 'Nov 2025', type: 'hackathon' },
